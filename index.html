@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1b2b">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="adesso business consulting — Vibe Coding Challenge 2026 participant portal. Team repositories, OpenCode installation, and SAP Utilities build space.">
+  <meta name="referrer" content="no-referrer">
+  <!-- Strict CSP: every script, style and font is served from this repository. No inline code, no CDNs, no trackers. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; media-src 'none'; frame-src 'none'; manifest-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <title>adesso business consulting | Vibe Coding Challenge 2026</title>
+  <link rel="preload" href="fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=7">
+  <script src="vendor/three-r128.bundle.js" defer></script>
+  <script src="app.js?v=7" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <canvas id="scene" class="scene" role="img" aria-label="Live 3D model of an energy grid: a solar park, a wind farm, battery storage, the SAP Utilities hub, high-voltage pylons, a smart meter and a housing estate. Energy pulses travel along the lines as the time of day changes."></canvas>
+  <div class="scene-tags" id="tags" aria-hidden="true">
+    <div class="tag" data-k="pv"><div><b>G1 · Solar park</b><span id="t-pv">0.0 MW</span></div></div>
+    <div class="tag" data-k="wind"><div><b>G2 · Wind farm</b><span id="t-wind">0.0 MW</span></div></div>
+    <div class="tag" data-k="store"><div><b>S1 · Battery storage</b><span id="t-store">idle</span></div></div>
+    <div class="tag tag-hub" data-k="hub"><div><b>SAP Utilities · Hub</b><span id="t-hub">Balance</span></div></div>
+    <div class="tag" data-k="meter"><div><b>M1 · Smart meter</b><span id="t-meter">0.0 MW</span></div></div>
+    <div class="tag" data-k="grid"><div><b>Transmission grid</b><span id="t-grid">0.0 MW</span></div></div>
+  </div>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="adesso business consulting — back to top">
+        <img class="logo logo-day" src="assets/adesso-business-consulting-day.png" width="164" height="48" alt="adesso business consulting">
+        <img class="logo logo-night" src="assets/adesso-business-consulting-night.png" width="164" height="48" alt="" aria-hidden="true">
+        <span class="brand-context"><small>Vibe Coding<br>Challenge 2026</small></span>
+      </a>
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="#teams">Teams</a>
+        <a href="#setup">Setup guide</a>
+        <a href="#git">Git</a>
+        <a href="#safety">Security</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn btn-primary btn-sm" href="#teams">Enter challenge <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" id="top" data-cam="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><i aria-hidden="true"></i>adesso business consulting <span class="rule" aria-hidden="true"></span> 2026 edition</p>
+        <div class="h1-stage">
+          <h1 id="hero-title"><span class="l1">Think bold.</span><span class="l2">Build beyond.</span></h1>
+        </div>
+        <p class="lead">One challenge. Three teams. Endless ways to create. Your workspace, tools, and first steps are all right here — on top of a live SAP Utilities energy grid.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#teams">Find your team <span aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#setup"><span class="play-glyph" aria-hidden="true">▶</span> View setup guide</a>
+        </div>
+        <p class="footnote"><span aria-hidden="true">✳</span> Works with Windows &amp; macOS · No IDE required</p>
+      </div>
+
+      <section class="clock panel" aria-label="Grid clock">
+        <div class="clock-head">
+          <div class="clock-time" id="clock">10:00</div>
+          <div class="clock-meta">Grid clock · SAP Utilities demo<br>15-min intervals · simulated data</div>
+          <button class="icon-btn" id="play" type="button" aria-label="Pause the grid clock">
+            <svg id="ico-pause" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" fill="currentColor"/></svg>
+            <svg id="ico-play" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" hidden><path d="M4 2 14 8 4 14Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+        <div class="range">
+          <label for="hour">Drag to change the time of day</label>
+          <input type="range" id="hour" min="0" max="23.99" step="0.25" value="10">
+        </div>
+        <svg class="chart" viewBox="0 0 480 128" role="img" aria-label="Load and solar output over 24 hours">
+          <line class="ax" x1="0" y1="110" x2="480" y2="110"/>
+          <line class="ax" x1="120" y1="8" x2="120" y2="110"/>
+          <line class="ax" x1="240" y1="8" x2="240" y2="110"/>
+          <line class="ax" x1="360" y1="8" x2="360" y2="110"/>
+          <path class="pv" id="c-pv" d="M0 110"/>
+          <path class="wd" id="c-wd" d="M0 110"/>
+          <path class="ld" id="c-ld" d="M0 110"/>
+          <line class="mk" id="c-mk" x1="0" y1="8" x2="0" y2="110"/>
+          <circle class="dot" id="c-dot" cx="0" cy="60" r="4.5"/>
+          <text x="2" y="124">00</text><text x="114" y="124">06</text><text x="234" y="124">12</text><text x="354" y="124">18</text><text x="466" y="124">24</text>
+          <g class="legend"><rect x="300" y="10" width="10" height="7" class="pv"/><text x="314" y="17">solar</text><line x1="354" y1="13.5" x2="366" y2="13.5" class="wd"/><text x="370" y="17">wind</text><line x1="410" y1="13.5" x2="422" y2="13.5" class="ld"/><text x="426" y="17">load</text></g>
+        </svg>
+        <dl class="reads">
+          <div><dt>Solar</dt><dd id="r-pv">0.0<small>MW</small></dd></div>
+          <div><dt>Wind</dt><dd id="r-wind">0.0<small>MW</small></dd></div>
+          <div><dt>Load</dt><dd id="r-load">0.0<small>MW</small></dd></div>
+          <div><dt id="r-store-l">Storage</dt><dd id="r-store">0.0<small>MW</small></dd></div>
+          <div class="ex"><dt id="r-ex-l">Export</dt><dd id="r-ex">0.0<small>MW</small></dd></div>
+        </dl>
+      </section>
+    </section>
+
+    <div class="ticker" aria-label="Challenge principles">
+      <div class="shell ticker-inner"><span>Imagine</span><b aria-hidden="true">✳</b><span>Explore</span><b aria-hidden="true">✳</b><span>Engineer</span><b aria-hidden="true">✳</b><span>Ship something great</span><b aria-hidden="true">✳</b><span>Repeat</span></div>
+    </div>
+
+    <section class="section shell teams" id="teams" data-cam="teams" aria-labelledby="teams-title">
+      <div class="col">
+        <div class="section-head">
+          <p class="kicker"><span>01</span> / Your workspace</p>
+          <h2 id="teams-title">Pick your <em>team.</em></h2>
+          <p class="section-lead">Each team has a dedicated private GitHub repository. Open yours after the organizer grants access.</p>
+        </div>
+
+        <article class="team-card panel" data-zone="gen">
+          <div class="team-glyph" aria-hidden="true">A</div>
+          <div class="team-body">
+            <div class="team-top"><span class="team-count">Team / 01</span><span class="team-availability" data-team-status="1"><i aria-hidden="true"></i> LINK PENDING</span></div>
+            <p class="team-ws">Workspace 001 · <span class="zone">Zone · Solar &amp; wind</span></p>
+            <h3>Team Alpha<span class="dot">.</span></h3>
+            <p class="team-desc">Ideas take shape here.</p>
+            <a class="team-link is-disabled" data-repo-link="1" data-repository-url="https://github.com/sasanmadadpour-adesso/Team-Alpha" aria-disabled="true" tabindex="-1"><span>Repository link coming soon</span><span class="arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="team-card panel" data-zone="hub">
+          <div class="team-glyph" aria-hidden="true">B</div>
+          <div class="team-body">
+            <div class="team-top"><span class="team-count">Team / 02</span><span class="team-availability" data-team-status="2"><i aria-hidden="true"></i> LINK PENDING</span></div>
+            <p class="team-ws">Workspace 002 · <span class="zone">Zone · Grid &amp; storage</span></p>
+            <h3>Team Beta<span class="dot">.</span></h3>
+            <p class="team-desc">Make the ambitious real.</p>
+            <a class="team-link is-disabled" data-repo-link="2" data-repository-url="https://github.com/sasanmadadpour-adesso/Team-Beta" aria-disabled="true" tabindex="-1"><span>Repository link coming soon</span><span class="arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="team-card panel" data-zone="cons">
+          <div class="team-glyph" aria-hidden="true">G</div>
+          <div class="team-body">
+            <div class="team-top"><span class="team-count">Team / 03</span><span class="team-availability" data-team-status="3"><i aria-hidden="true"></i> LINK PENDING</span></div>
+            <p class="team-ws">Workspace 003 · <span class="zone">Zone · Homes &amp; metering</span></p>
+            <h3>Team Gamma<span class="dot">.</span></h3>
+            <p class="team-desc">Push every possibility.</p>
+            <a class="team-link is-disabled" data-repo-link="3" data-repository-url="https://github.com/sasanmadadpour-adesso/Team-Gamma" aria-disabled="true" tabindex="-1"><span>Repository link coming soon</span><span class="arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <p class="team-hint panel"><span class="hint-icon" aria-hidden="true">i</span><span>Private repository? GitHub login and team-specific access are required. Never use the organizer's personal credentials.</span></p>
+      </div>
+    </section>
+
+    <section class="section setup" id="setup" data-cam="setup" aria-labelledby="setup-title">
+      <div class="shell">
+        <div class="section-head setup-head">
+          <p class="kicker"><span>02</span> / Get ready to build</p>
+          <h2 id="setup-title">Four steps.<br><em>Zero guesswork.</em></h2>
+          <p class="section-lead">Your first build starts with a clean setup. Follow these steps on the coding laptop for your team.</p>
+        </div>
+        <div class="setup-board panel">
+          <div class="steps">
+            <article class="step"><div class="step-index">01</div><div class="step-content"><h3>Install Git, Node.js &amp; OpenCode</h3><p>On Windows, use PowerShell and run the commands shown on the right <strong>one at a time</strong>. First install Git (if needed), then Node.js LTS, and then OpenCode using npm. <strong>Close and reopen PowerShell after installing Node.js</strong> before continuing. No VS Code installation is required.</p><p>On macOS, switch to the Terminal tab. Install Homebrew if you don't have it yet, then install Git and Node.js with brew, and OpenCode with npm.</p><div class="resource-links"><a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Git <span aria-hidden="true">↗</span></a><a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Node.js LTS <span aria-hidden="true">↗</span></a><a href="https://opencode.ai/docs/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenCode docs <span aria-hidden="true">↗</span></a></div></div></article>
+            <article class="step"><div class="step-index">02</div><div class="step-content"><h3>Clone your private repository</h3><p>Open your team's repository card above. Copy its HTTPS clone URL and use <code>git clone</code>. Ask the organizer for access if needed.</p><div class="sample-code"><span class="code-label">Example · replace with your team URL</span><code>git clone &lt;YOUR_TEAM_REPOSITORY_URL&gt;</code><code>cd &lt;YOUR_PROJECT_DIRECTORY&gt;</code></div></div></article>
+            <article class="step"><div class="step-index">03</div><div class="step-content"><h3>Configure OpenCode</h3><p>Download <code>opencode.json</code> and place it in the <strong>root of your cloned team project</strong>. This is a public starter template, not a complete AI Hub setup. The organizer will provide the approved provider settings separately. Never commit credentials to Git.</p><a class="download" href="opencode.json" download="opencode.json" aria-label="Download OpenCode starter configuration JSON file"><span class="download-icon" aria-hidden="true">↓</span><span class="download-text"><strong>Download starter config</strong><small>opencode.json · Safe public template</small></span><span class="download-chevron" aria-hidden="true">↗</span></a></div></article>
+            <article class="step"><div class="step-index">04</div><div class="step-content"><h3>Connect &amp; create</h3><p>Open PowerShell or Terminal <strong>inside the cloned project folder</strong> and run <code>opencode</code>. Use <code>/connect</code> to choose the approved AI Hub provider and enter your device-specific API key locally. Run <code>/models</code>, select the assigned model, and test with a short prompt. If PowerShell blocks the script shim, use <code>opencode.cmd</code> instead.</p><div class="small-steps"><span><i aria-hidden="true">1</i> Run OpenCode</span><span><i aria-hidden="true">2</i> <code>/connect</code></span><span><i aria-hidden="true">3</i> <code>/models</code></span></div></div></article>
+          </div>
+
+          <aside class="terminal" aria-label="OpenCode installation commands">
+            <div class="terminal-top"><div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div><span>Setup / terminal</span><span class="terminal-badge">Quick start</span></div>
+            <div class="terminal-body">
+              <div class="terminal-intro"><span class="terminal-prompt" aria-hidden="true">&gt;_</span><h3>Your terminal.<br>Your launchpad.</h3><p>Select your operating system and follow the commands.</p></div>
+              <div class="os-tabs" role="tablist" aria-label="Operating system">
+                <button type="button" class="os-tab is-active" id="tab-windows" role="tab" aria-selected="true" aria-controls="panel-windows" data-tab="windows">Windows / PowerShell</button>
+                <button type="button" class="os-tab" id="tab-mac" role="tab" aria-selected="false" aria-controls="panel-mac" tabindex="-1" data-tab="mac">macOS / Terminal</button>
+              </div>
+              <div class="terminal-code" id="panel-windows" role="tabpanel" aria-labelledby="tab-windows" data-panel="windows"><div class="code-toolbar"><span>Windows · run one at a time</span><button type="button" class="copy-control" data-copy="windows" aria-label="Copy Windows setup commands">Copy commands <span aria-hidden="true">↗</span></button></div><pre><code><span class="c"># 0 · Install Git if needed</span>
+<span class="p">PS&gt;</span> winget install --id Git.Git -e
+
+<span class="c"># 1 · Install Node.js LTS</span>
+<span class="p">PS&gt;</span> <span class="h">winget install OpenJS.NodeJS.LTS</span>
+<span class="c"># Close and REOPEN PowerShell now.</span>
+
+<span class="c"># 2 · Install OpenCode</span>
+<span class="p">PS&gt;</span> <span class="h">npm.cmd install --global opencode-ai</span>
+
+<span class="c"># 3 · Verify installation</span>
+<span class="p">PS&gt;</span> <span class="h">opencode --version</span>
+<span class="c"># If blocked, use opencode.cmd --version</span>
+
+<span class="c"># 4 · Start in your project folder</span>
+<span class="p">PS&gt;</span> opencode</code></pre></div>
+              <div class="terminal-code" id="panel-mac" role="tabpanel" aria-labelledby="tab-mac" data-panel="mac" hidden><div class="code-toolbar"><span>macOS · Homebrew</span><button type="button" class="copy-control" data-copy="mac" aria-label="Copy macOS setup commands">Copy commands <span aria-hidden="true">↗</span></button></div><pre><code><span class="c"># 0 · Install Homebrew if needed (see brew.sh)</span>
+<span class="p">$</span> /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+<span class="c"># Apple Silicon (M1–M4): put brew on your PATH</span>
+<span class="p">$</span> echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile
+<span class="p">$</span> eval "$(/opt/homebrew/bin/brew shellenv)"
+
+<span class="c"># 1 · Install Git and Node.js</span>
+<span class="p">$</span> <span class="h">brew install git node</span>
+
+<span class="c"># 2 · Install OpenCode</span>
+<span class="p">$</span> <span class="h">npm install --global opencode-ai</span>
+
+<span class="c"># 3 · Verify and start in your project folder</span>
+<span class="p">$</span> <span class="h">opencode --version</span>
+<span class="p">$</span> opencode</code></pre></div>
+              <div class="terminal-footer"><span class="terminal-dot" aria-hidden="true"></span><span>Run OpenCode from <strong>inside your team project folder.</strong></span></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section git" id="git" data-cam="git" aria-labelledby="git-title">
+      <div class="shell">
+        <div class="section-head git-head panel">
+          <p class="kicker"><span>03</span> / Git in 60 seconds</p>
+          <h2 id="git-title">Save often.<br><em>Ship together.</em></h2>
+          <p class="section-lead">Everything your team needs from Git, from installing it to fixing a rejected push. All teams work on <code>main</code>.</p>
+        </div>
+        <div class="git-board" aria-label="Git commands">
+          <div class="terminal-top"><div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div><span>Git / cheat sheet</span><span class="terminal-badge">All teams on main</span></div>
+          <div class="git-groups">
+            <div class="git-group">
+              <p class="git-tag"><span>A</span> Once</p>
+              <h3>Set up &amp; clone</h3>
+              <div class="git-row"><span class="git-what">Install Git · Windows</span><pre class="git-cmd"><code>winget install --id Git.Git -e</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Install Git · Windows">Copy</button></div><div class="git-row"><span class="git-what">Install Git · macOS</span><pre class="git-cmd"><code>brew install git</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Install Git · macOS">Copy</button></div><div class="git-row"><span class="git-what">Tell Git who you are (needed for your first commit)</span><pre class="git-cmd"><code>git config --global user.name &quot;Your Name&quot;
+git config --global user.email &quot;you@example.com&quot;</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Tell Git who you are (needed for your first commit)">Copy</button></div><div class="git-row"><span class="git-what">Clone your team repository</span><pre class="git-cmd"><code>git clone &lt;YOUR_TEAM_REPOSITORY_URL&gt;</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Clone your team repository">Copy</button></div><div class="git-row"><span class="git-what">Go into the project folder</span><pre class="git-cmd"><code>cd &lt;YOUR_PROJECT_DIRECTORY&gt;</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Go into the project folder">Copy</button></div>
+            </div>
+            <div class="git-group">
+              <p class="git-tag"><span>B</span> Every day</p>
+              <h3>The work loop</h3>
+              <div class="git-row"><span class="git-what">Start working · get your team's latest changes</span><pre class="git-cmd"><code>git pull</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Start working · get your team&#x27;s latest changes">Copy</button></div><div class="git-row"><span class="git-what">See what changed</span><pre class="git-cmd"><code>git status</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: See what changed">Copy</button></div><div class="git-row"><span class="git-what">Save a checkpoint (1/2) · stage all changes</span><pre class="git-cmd"><code>git add .</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Save a checkpoint (1/2) · stage all changes">Copy</button></div><div class="git-row"><span class="git-what">Save a checkpoint (2/2) · commit with a message</span><pre class="git-cmd"><code>git commit -m &quot;Describe your change&quot;</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Save a checkpoint (2/2) · commit with a message">Copy</button></div><div class="git-row"><span class="git-what">Share with your team</span><pre class="git-cmd"><code>git push</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Share with your team">Copy</button></div>
+            </div>
+            <div class="git-group">
+              <p class="git-tag"><span>C</span> When it breaks</p>
+              <h3>Quick fixes</h3>
+              <div class="git-row"><span class="git-what">Push rejected? Get the team's changes first, then push again</span><pre class="git-cmd"><code>git pull
+git push</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Push rejected? Get the team&#x27;s changes first, then push again">Copy</button></div><div class="git-row"><span class="git-what">The AI broke something · go back to your last commit</span><pre class="git-cmd"><code>git restore .</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: The AI broke something · go back to your last commit">Copy</button></div><div class="git-row"><span class="git-what">Park your changes for a moment</span><pre class="git-cmd"><code>git stash</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Park your changes for a moment">Copy</button></div><div class="git-row"><span class="git-what">Bring parked changes back</span><pre class="git-cmd"><code>git stash pop</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Bring parked changes back">Copy</button></div><div class="git-row"><span class="git-what">Show the last 10 commits</span><pre class="git-cmd"><code>git log --oneline -10</code></pre><button type="button" class="copy-control" data-copy-cmd aria-label="Copy: Show the last 10 commits">Copy</button></div>
+            </div>
+          </div>
+          <ol class="git-rules">
+            <li><b>Pull first.</b> Run <code>git pull</code> before you start and before every push.</li>
+            <li><b>Commit often.</b> Every commit is a checkpoint you can return to when AI-generated code goes wrong.</li>
+            <li><b>Split by files.</b> If two people never edit the same file, merge conflicts almost disappear.</li>
+            <li><b>Never commit API keys.</b> Keys belong in OpenCode's <code>/connect</code> login only.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell security" id="safety" data-cam="security" aria-labelledby="safety-title">
+      <div class="col">
+        <div class="security-card panel">
+          <p class="kicker"><span>04</span> / Built with responsibility</p>
+          <h2 id="safety-title">Good code.<br><em>Better boundaries.</em></h2>
+          <p>The participant portal is public. Your project code is private. Never publish API credentials on public webpages, repositories, or screenshots. Use only the organizer-approved private distribution method for keys.</p>
+          <div class="pills"><span><i aria-hidden="true">✓</i> Private team repositories</span><span><i aria-hidden="true">✓</i> Credentials delivered separately</span><span><i aria-hidden="true">✓</i> No trackers or external scripts</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell faq" id="faq" data-cam="faq" aria-labelledby="faq-title">
+      <div class="faq-card panel">
+        <div class="faq-left">
+          <p class="kicker"><span>05</span> / The important details</p>
+          <h2 id="faq-title">A few things<br>to <em>know.</em></h2>
+          <p>Need help with the setup? Ask your event organizer.</p>
+        </div>
+        <div class="faq-list">
+          <details><summary>Do I need VS Code to participate? <span aria-hidden="true">+</span></summary><p>No. OpenCode runs in PowerShell or Terminal. An IDE is optional.</p></details>
+          <details><summary>My team repository won't open. What now? <span aria-hidden="true">+</span></summary><p>Team repositories are private. Confirm you're signed in with an account that has access, then ask the organizer to grant the right permissions. Do not use somebody else's account or token.</p></details>
+          <details><summary>Where do I enter my API key? <span aria-hidden="true">+</span></summary><p>The organizer provides a device-specific credential through an approved private process. Enter it only in the approved OpenCode authentication workflow, not in this website or a GitHub file.</p></details>
+          <details><summary>Is the public starter configuration ready to use? <span aria-hidden="true">+</span></summary><p>Not by itself. The JSON download intentionally contains no company endpoint, model IDs, or credentials. The organizer must supply and validate the approved AI Hub provider settings first.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final shell" data-cam="final" aria-labelledby="final-title">
+      <p class="kicker">The starting line is yours</p>
+      <div class="final-row">
+        <h2 id="final-title" class="final-title">Make something<br><span>remarkable.</span></h2>
+        <a class="btn btn-primary btn-lg" href="#teams">Let's build <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner panel">
+      <span class="footer-brand"><span aria-hidden="true">✳</span> adesso business consulting <b>· 2026</b></span>
+      <span>Participant launchpad · Crafted for builders.</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+  <div class="sr-only" id="live-announcement" role="status" aria-live="polite"></div>
+</body>
+</html>
